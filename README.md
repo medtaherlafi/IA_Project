@@ -1,0 +1,1 @@
+C'est un jeu de dames crée dans le cadre d'un projet de l'UE Intelligence Artificelle. Il contient une IA qui propose 3 niveaux de difficultés. 
