@@ -2,7 +2,7 @@ import pygame
 import pygame_menu
 from constants import *
 from game import Game
-from IA.algorithm import minimax
+from IA.minimax import minimax
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Jeu de Dames')
@@ -82,7 +82,7 @@ def set_menu():
     menu.add.button('2 joueurs', jouerADeux)
     
     #Paramètrage des Difficultés
-    menu.add.selector('Difficulté :', [('Facile', 1),  ('Intermédiaire', 2), ('Expert', 3),], onchange=set_difficulty)
+    menu.add.selector('Difficulté :', [('Niveau', 0) ,('Facile', 1),  ('Intermédiaire', 2), ('Expert', 3),], onchange=set_difficulty)
     
     #Jouer contre une IA
     menu.add.button('1 joueur VS I.A', start_the_game)

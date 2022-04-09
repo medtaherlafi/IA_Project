@@ -13,10 +13,10 @@ ROWS, COLS = 8, 8
 SQUARE_SIZE=WIDTH//COLS
 
 #Représentation des couleurs
-RED = (255, 0, 0)
+RED = (255, 8, 0)
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-BLUE = (0, 0, 255)
+BLACK = (36, 36, 36)
+BLUE = (115, 194, 251)
 GREY = (128,128,128)
 
 #La couronne quand une pièce atteint le territoire de l'adversaire ?
