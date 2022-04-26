@@ -5,11 +5,29 @@ RED = (255,0,0)
 WHITE = (255, 255, 255)
 
 def minimax(position, depth, max_player, game):
+    """
+    Retourne le meilleur mouvement
+    
+    :param position: Le plateau
+    :param depth: profondeur de l'algorithme
+    :param max_player: le joueur est il max ou min (True for max, False for min)
+    :param game: Le jeu
+    :type position: Board
+    :type depth: int
+    :type max_player: Boolean
+    :type game: Game
+    :return: La meilleur move et maxEval ou minEval
+
+        :Example:
+        
+         >>> minimax(game.get_board(), 3, WHITE, game)
+    """
     if depth == 0 or position.winner() != None:
         return position.evaluate(), position
     
     if max_player:
         maxEval = float('-inf')
+        print("here")
         best_move = None
         for move in get_all_moves(position, WHITE, game):
             evaluation = minimax(move, depth-1, False, game)[0]
@@ -19,6 +37,7 @@ def minimax(position, depth, max_player, game):
         
         return maxEval, best_move
     else:
+        print("yes?")
         minEval = float('inf')
         best_move = None
         for move in get_all_moves(position, RED, game):
@@ -31,6 +50,23 @@ def minimax(position, depth, max_player, game):
 
 
 def simulate_move(piece, move, board, game, skip):
+    """
+    Retourne le plateau après un mouvement
+    
+    :param piece: La pièce
+    :param move: Le mouvement
+    :param board: Le plateau
+    :param game: Le jeu
+    :param skip: mouvements à ignorer
+    :type piece: Piece
+    :type move: tuple
+    :type board: Board
+    :type game: Game
+    :type skip: list
+    
+    :return: La meilleur move
+    """
+    
     board.move(piece, move[0], move[1])
     if skip:
         board.remove(skip)
@@ -39,6 +75,24 @@ def simulate_move(piece, move, board, game, skip):
 
 
 def get_all_moves(board, color, game):
+    """
+    Retourne le meilleur mouvement
+    
+    
+    :param board: Le plateau
+    :param color: Le couleur du joueur
+    :param game: Le jeu
+    :type board: Board
+    :type color: tuple
+    :type game: Game
+    
+    :return: Tous les mouvements
+
+        :Example:
+        
+         >>> get_all_moves(game.get_board(), WHITE, game)
+    """
+
     moves = []
 
     for piece in board.get_all_pieces(color):
@@ -54,10 +108,27 @@ def get_all_moves(board, color, game):
 
 
 def draw_moves(game, board, piece):
+    """
+    Dessine les mouvements
+    
+    :param game: Le jeu
+    :param board: Le plateau
+    :param piece: La pièce
+    :type game: Game
+    :type board: Board
+    :type piece: Piece
+    
+    
+    :return: None
+
+        :Example:
+        
+         >>> draw_moves(game, game.get_board(), piece)
+    """
     valid_moves = board.get_valid_moves(piece)
     board.draw(game.win)
     pygame.draw.circle(game.win, (0,255,0), (piece.x, piece.y), 50, 5)
     game.draw_valid_moves(valid_moves.keys())
     pygame.display.update()
-    #pygame.time.delay(100)
+    pygame.time.delay(100)
 

@@ -1,8 +1,9 @@
 import pygame
-from constants import *
-from piece import Piece
+from .constants import *
+from .piece import Piece
 
 class Board:
+    """Classe réprésentant le plateau de jeu et ses modifications"""
     def __init__(self):
         self.board = []
         self.red_left = self.white_left = 12
@@ -10,9 +11,11 @@ class Board:
         self.create_board()
     
     def evaluate(self):
+        """Evaluation"""
         return self.white_left - self.red_left + (self.white_kings * 0.5 - self.red_kings * 0.5)
     
     def get_all_pieces(self, color):
+        """Retourne toutes les pièces"""
         pieces = []
         for row in self.board:
             for piece in row:
@@ -21,12 +24,14 @@ class Board:
         return pieces
     
     def draw_squares(self, win):
+        """Dessine des cases"""
         win.fill(BLACK)
         for row in range(ROWS):
             for col in range(row % 2, COLS, 2):
                 pygame.draw.rect(win, RED, (row*SQUARE_SIZE, col *SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE))
 
     def move(self, piece, row, col):
+        """Déplacer une pièce"""
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
 
@@ -41,6 +46,7 @@ class Board:
         return self.board[row][col]
 
     def create_board(self):
+        """Création d'un plateau de jeu"""
         for row in range(ROWS):
             self.board.append([])
             for col in range(COLS):
@@ -55,6 +61,7 @@ class Board:
                     self.board[row].append(0)
         
     def draw(self, win):
+        """Dessine Le plateau"""
         self.draw_squares(win)
         for row in range(ROWS):
             for col in range(COLS):
@@ -63,6 +70,7 @@ class Board:
                     piece.draw(win)
 
     def remove(self, pieces):
+        """Supprime des pièces"""
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
             if piece != 0:
@@ -72,6 +80,7 @@ class Board:
                     self.white_left -= 1
     
     def winner(self):
+        """Retourne le gagnant"""
         if self.red_left <= 0:
             return WHITE
         elif self.white_left <= 0:
@@ -80,6 +89,7 @@ class Board:
         return None 
     
     def get_valid_moves(self, piece):
+        """Retourne les mouvements valides"""
         moves = {}
         left = piece.col - 1
         right = piece.col + 1
@@ -95,6 +105,7 @@ class Board:
         return moves
 
     def _traverse_left(self, start, stop, step, color, left, skipped=[]):
+        """Déplacement à gauche"""
         moves = {}
         last = []
         for r in range(start, stop, step):
@@ -128,6 +139,7 @@ class Board:
         return moves
 
     def _traverse_right(self, start, stop, step, color, right, skipped=[]):
+        """Déplacement à droite"""
         moves = {}
         last = []
         for r in range(start, stop, step):
